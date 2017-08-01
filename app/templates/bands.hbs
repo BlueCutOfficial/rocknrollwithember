@@ -1,0 +1,19 @@
+<div class="col-md-4">
+  <ul class="list-group">
+    <li class="list-group-item">
+      {{input type="text" class="new-band" placeholder="New band" value=name}}
+      <button class="btn btn-primary btn-sm new-band-button" {{action "createBand"}}>Add</button>
+    </li>
+    {{#each model as |band|}}
+      <li class="list-group-item">
+        {{#link-to "bands.band.songs" band class="list-group-itemband-link"}}
+          {{band.name}}
+          <span class="pointer glyphicon glyphicon-chevron-right"></span>
+        {{/link-to}}
+      </li>
+    {{/each}}
+  </ul>
+</div>
+<div class="col-md-8">
+{{outlet}}
+</div>
