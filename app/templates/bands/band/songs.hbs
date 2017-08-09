@@ -7,8 +7,8 @@
       </div>
     </li>
   {{/unless}}
-  <!-- "create song" clicked : display the input field (part of the standard case, songCreationStarted=true if songs exist ) -->
-  {{#if songCreationStarted}}
+  <!-- "create song" clicked : display the input field (part of the standard case, canCreateSong=true if songs exist ) -->
+  {{#if canCreateSong}}
     <li class="list-group-item">
       {{input type="text" class="new-song" placeholder="New song" value=title}}
       <button class="btn btn-primary btn-sm new-song-button" disabled={{isAddButtonDisabled}} {{action "createSong"}}>Add</button>

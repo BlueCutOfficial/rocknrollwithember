@@ -6,11 +6,13 @@ export default Ember.Controller.extend({
 
   songCreationStarted: false,
 
-  canCreateSong: Ember.computed.or('songCreationStarted', 'model.songs.length'),
+  canCreateSong: Ember.computed.or('songCreationStarted', 'hasSongs'),
 
   isAddButtonDisabled: Ember.computed.empty('title'),
 
   noSongs: Ember.computed.equal('model.songs.length', 0),
+
+  hasSongs: Ember.computed.not('noSongs'),
 
 	actions: {
 

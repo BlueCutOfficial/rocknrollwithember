@@ -7,6 +7,10 @@ export default Ember.Route.extend({
       return this.modelFor('bands.band');
   },
 
+  resetController: function(controller) {
+    controller.set('songCreationStarted', false);
+  },
+
   actions: {
 
     createSong: function() {
@@ -16,6 +20,11 @@ export default Ember.Route.extend({
       var song = Song.create({ title: title, band: band });
       band.get('songs').pushObject(song);
       controller.set('title', '');
+    },
+
+    didTransition: function() {
+      var band = this.modelFor('bands.band');
+      document.title = `${band.get('name')} songs - R&R with Ember`;
     }
     
   }

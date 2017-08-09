@@ -1,11 +1,15 @@
 import Ember from 'ember';
+import DS from 'ember-data';
 
 export default Ember.Object.extend({
   
-  // Name of the song
+  // Name of the band
   name: '',
 
-  // slug for the URL (/bands/[name]/songs/)
+  // Description of the band
+  description: '',
+
+  // slug for the route (/bands/[name]/songs/)
   slug: Ember.computed('name', function() {
     return this.get('name').dasherize();
   }),
