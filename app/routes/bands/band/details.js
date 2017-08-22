@@ -8,6 +8,13 @@ export default Ember.Route.extend({
 
   actions: {
 
+    save: function() {
+      var controller = this.get('controller');
+      // the model property of the route is the old value, not the new model modified by the controller
+      var band = controller.get('model');
+      return band.save();
+    },
+
     willTransition: function(transition) {
       var controller = this.get('controller');
       var leave;
