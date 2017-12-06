@@ -2,7 +2,14 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 
+  queryParams: {
+    sortBy: 'sort',
+    searchTerm: 's',
+  },
+
   title: '',
+
+  searchTerm: '',
 
   songCreationStarted: false,
 
@@ -15,7 +22,15 @@ export default Ember.Controller.extend({
   noSongs: Ember.computed.or('zeroSongs', 'undefinedSongs'),
   hasSongs: Ember.computed.not('noSongs'),
 
+  matchingSongs: Ember.computed('model.songs.@each.title', 'searchTerm', function() {
+    var searchTerm = this.get('searchTerm').toLowerCase();
+    return this.get('model.songs').filter(function(song) {
+       return song.get('title').toLowerCase().indexOf(searchTerm) !== -1;
+    });
+  }),
+
   sortBy: 'ratingDesc',
+
   sortProperties: Ember.computed('sortBy', function() {
     var options = {
       'ratingDesc': 'rating:desc,title:asc',
@@ -25,7 +40,8 @@ export default Ember.Controller.extend({
     };
     return options[this.get('sortBy')].split(',');
   }),
-  sortedSongs: Ember.computed.sort('model.songs', 'sortProperties'),
+
+  sortedSongs: Ember.computed.sort('matchingSongs', 'sortProperties'),
 
 	actions: {
 

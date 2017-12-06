@@ -27,6 +27,33 @@ var BandLDC = {
   }
 };
 
+var Elephants = {
+  id: 1,
+  type: 'songs',
+  attributes: {
+    title: 'Elephants',
+    rating: 2
+  }
+};
+
+var NewFang = {
+  id: 2,
+  type: 'songs',
+  attributes: {
+    title: 'New Fang',
+    rating: 4
+  }
+};
+
+var Lithium = {
+  id: 3,
+  type: 'songs',
+  attributes: {
+    title: 'Lithium',
+    rating: 5
+  }
+};
+
 test('List bands', function (assert) {
 
   server = new Pretender(function() {
@@ -77,3 +104,15 @@ test('Create a new song in two steps', function(assert) {
   });
 });
 
+test('Search term', function (assert) {
+  server = new Pretender(function() {
+    httpStubs.stubBands(this, [BandRadiohead]);
+    httpStubs.stubSongs(this, 1, [Elephants,NewFang,Lithium]);
+  });
+
+  visit('/bands/1');
+  fillIn('.search-field', 'an');
+  andThen(function() {
+    assertLength(assert, '.song', 2, 'The songs matching the search term are displayed');
+  });
+});
