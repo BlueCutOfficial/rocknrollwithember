@@ -2,17 +2,17 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
 
-  model: function() {
+  model() {
       return this.modelFor('bands.band');
   },
 
-  resetController: function(controller) {
+  resetController(controller) {
     controller.set('songCreationStarted', false);
   },
 
   actions: {
 
-    createSong: function() {
+    createSong() {
       var controller = this.get('controller');
       var band = this.modelFor('bands.band');
       var song = this.store.createRecord('song', { title: controller.get('title'), band: band });
@@ -27,7 +27,7 @@ export default Ember.Route.extend({
       var band = this.modelFor('bands.band');
       document.title = `${band.get('name')} songs - R&R with Ember`;
     }
-    
+
   }
 
 });

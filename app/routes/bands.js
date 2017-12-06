@@ -2,13 +2,13 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
 
-  model: function() {
+  model() {
     return this.store.findAll('band');
   },
 
   actions: {
 
-    createBand: function() {
+    createBand() {
       var route = this;
       var controller = this.get('controller');
       var band = this.store.createRecord('band', controller.getProperties('name'));
@@ -24,7 +24,7 @@ export default Ember.Route.extend({
     didTransition: function() {
       document.title = 'Bands - R&R with Ember';
     }
-    
+
   }
 
 });
