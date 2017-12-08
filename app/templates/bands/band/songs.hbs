@@ -10,7 +10,7 @@
   <!-- "create song" clicked : display the input field (part of the standard case, canCreateSong=true if songs exist ) -->
   {{#if canCreateSong}}
     <li class="list-group-item">
-      {{input type="text" class="new-song" placeholder="New song" value=title}}
+      {{input type="text" class="new-song" placeholder=newSongPlaceholder value=title}}
       <button class="btn btn-primary btn-sm new-song-button" disabled={{isAddButtonDisabled}} {{action "createSong"}}>Add</button>
     </li>
     <li class="btn-group song-filter-search-panel" role="group">
@@ -50,7 +50,7 @@
   <!-- loop of the standard case : display songs -->
   {{#each sortedSongs as |song|}}
     <li class="list-group-item song">
-      {{song.title}}
+      {{capitalize song.title}}
       {{star-rating rating=song.rating item=song onClick=(action "updateRating")}}
     </li>
   {{/each}}

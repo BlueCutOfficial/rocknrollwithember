@@ -7,7 +7,7 @@
     {{#each model as |band|}}
       <li class="list-group-item">
         {{#link-to "bands.band" band class="list-group-item band-link"}}
-          {{band.name}}
+          {{capitalize band.name}}
           <span class="pointer glyphicon glyphicon-chevron-right"></span>
         {{/link-to}}
       </li>
