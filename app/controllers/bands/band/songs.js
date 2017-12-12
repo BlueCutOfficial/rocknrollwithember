@@ -1,11 +1,13 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { computed } from '@ember/object';
+import { empty, equal, or, not, sort } from '@ember/object/computed';
 import { capitalize } from 'rocknrollwithember/helpers/capitalize';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
 
   queryParams: {
     sortBy: 'sort',
-    searchTerm: 's',
+    searchTerm: 's'
   },
 
   title: '',
@@ -14,17 +16,17 @@ export default Ember.Controller.extend({
 
   songCreationStarted: false,
 
-  canCreateSong: Ember.computed.or('songCreationStarted', 'hasSongs'),
+  canCreateSong: or('songCreationStarted', 'hasSongs'),
 
-  isAddButtonDisabled: Ember.computed.empty('title'),
+  isAddButtonDisabled: empty('title'),
 
-  zeroSongs: Ember.computed.equal('model.songs.length', 0),
-  undefinedSongs: Ember.computed.equal('model.songs.length', undefined),
-  noSongs: Ember.computed.or('zeroSongs', 'undefinedSongs'),
-  hasSongs: Ember.computed.not('noSongs'),
+  zeroSongs: equal('model.songs.length', 0),
+  undefinedSongs: equal('model.songs.length', undefined),
+  noSongs: or('zeroSongs', 'undefinedSongs'),
+  hasSongs: not('noSongs'),
 
-  matchingSongs: Ember.computed('model.songs.@each.title', 'searchTerm', function() {
-    var searchTerm = this.get('searchTerm').toLowerCase();
+  matchingSongs: computed('model.songs.@each.title', 'searchTerm', function() {
+    let searchTerm = this.get('searchTerm').toLowerCase();
     return this.get('model.songs').filter(function(song) {
        return song.get('title').toLowerCase().indexOf(searchTerm) !== -1;
     });
@@ -32,8 +34,8 @@ export default Ember.Controller.extend({
 
   sortBy: 'ratingDesc',
 
-  sortProperties: Ember.computed('sortBy', function() {
-    var options = {
+  sortProperties: computed('sortBy', function() {
+    let options = {
       'ratingDesc': 'rating:desc,title:asc',
       'ratingAsc': 'rating:asc,title:asc',
       'titleDesc': 'title:desc',
@@ -42,16 +44,16 @@ export default Ember.Controller.extend({
     return options[this.get('sortBy')].split(',');
   }),
 
-  sortedSongs: Ember.computed.sort('matchingSongs', 'sortProperties'),
+  sortedSongs: sort('matchingSongs', 'sortProperties'),
 
-  newSongPlaceholder: Ember.computed('model.name', function() {
-    var bandName = capitalize(this.get('model.name'));
+  newSongPlaceholder: computed('model.name', function() {
+    let bandName = capitalize(this.get('model.name'));
     return `New ${bandName} song`;
   }),
 
-	actions: {
+    actions: {
 
-    enableSongCreation: function() {
+    enableSongCreation() {
       this.set('songCreationStarted', true);
     },
 
@@ -61,8 +63,7 @@ export default Ember.Controller.extend({
 
     // used with the default addon
     updateRating(params) {
-      var song = params.item;
-      var rating = params.rating;
+      let { item: song, rating } = params;
       song.set('rating', rating);
       return song.save();
     },

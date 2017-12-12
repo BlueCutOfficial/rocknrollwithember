@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import { isEmpty } from '@ember/utils';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
+export default Route.extend({
 
-  afterModel: function(band) {
-    var description = band.get('description');
-    if(Ember.isEmpty(description)) {
+  afterModel(band) {
+    let description = band.get('description');
+    if(isEmpty(description)) {
       this.transitionTo('bands.band.songs');
     }
     else {

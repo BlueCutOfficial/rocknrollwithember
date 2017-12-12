@@ -1,23 +1,23 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
+export default Route.extend({
 
-  model: function() {
+  model() {
     return this.modelFor('bands.band');
   },
 
   actions: {
 
-    save: function() {
-      var controller = this.get('controller');
+    save() {
+      let controller = this.get('controller');
       // the model property of the route is the old value, not the new model modified by the controller
-      var band = controller.get('model');
+      let band = controller.get('model');
       return band.save();
     },
 
-    willTransition: function(transition) {
-      var controller = this.get('controller');
-      var leave;
+    willTransition(transition) {
+      let controller = this.get('controller');
+      let leave;
 
       if(controller.get('isEditing')) {
         leave = window.confirm("You have unsaved changes. Are you sure you want to leave?");

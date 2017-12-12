@@ -1,11 +1,10 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { empty } from '@ember/object/computed';
 
-export default Ember.Controller.extend({
+export default Controller.extend({
 
   name: '',
 
-  isAddButtonDisabled: Ember.computed('name', function() {
-    return Ember.isEmpty(this.get('name'));
-  })
-  
+  isAddButtonDisabled: empty('name')
+
 });

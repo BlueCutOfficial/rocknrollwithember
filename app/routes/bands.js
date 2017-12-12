@@ -1,6 +1,6 @@
-import Ember from 'ember';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
+export default Route.extend({
 
   model() {
     return this.store.findAll('band');
@@ -9,11 +9,11 @@ export default Ember.Route.extend({
   actions: {
 
     createBand() {
-      var route = this;
-      var controller = this.get('controller');
-      var band = this.store.createRecord('band', controller.getProperties('name'));
+      let route = this;
+      let controller = this.get('controller');
+      let band = this.store.createRecord('band', controller.getProperties('name'));
 
-      band.save().then(function() {
+      band.save().then(() => {
         // Reset the input field after the band's creation is validated
         controller.set('name', '');
         // Switch to the songs
@@ -21,7 +21,7 @@ export default Ember.Route.extend({
       });
     },
 
-    didTransition: function() {
+    didTransition() {
       document.title = 'Bands - R&R with Ember';
     }
 
