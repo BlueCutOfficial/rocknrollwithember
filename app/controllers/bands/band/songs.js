@@ -55,16 +55,24 @@ export default Ember.Controller.extend({
       this.set('songCreationStarted', true);
     },
 
-    setSorting: function(option) {
+    setSorting(option) {
       this.set('sortBy', option);
     },
 
-    updateRating: function(params) {
+    // used with the default addon
+    updateRating(params) {
       var song = params.item;
       var rating = params.rating;
       song.set('rating', rating);
       return song.save();
+    },
+
+    // used with the overwrite addon
+    updateRatingV2(song, rating) {
+        song.set('rating', rating);
+        return song.save();
     }
+
   }
 
 });

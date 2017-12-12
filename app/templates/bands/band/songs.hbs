@@ -51,7 +51,16 @@
   {{#each sortedSongs as |song|}}
     <li class="list-group-item song">
       {{capitalize song.title}}
-      {{star-rating rating=song.rating item=song onClick=(action "updateRating")}}
+      {{!-- {{star-rating rating=song.rating item=song onClick=(action "updateRating")}} --}}
+      {{#star-rating rating=song.rating item=song as |stars|}}
+        {{#each stars as |star|}}
+          {{#if star.full}}
+            <a href="#" {{action "updateRatingV2" song star.rating}}>*</a>
+          {{else}}
+            <a href="#" {{action "updateRatingV2" song star.rating}}>°</a>
+          {{/if}}
+        {{/each}}
+      {{/star-rating}}
     </li>
   {{/each}}
 </ul>
